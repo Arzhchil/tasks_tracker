@@ -1,0 +1,103 @@
+<!--<form [formGroup]="taskForm">
+
+  <mat-form-field appearance="fill">
+    <mat-label>ID</mat-label>
+    <input matInput formControlName="Id" type="number">
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Id'])">ID is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="Title" type="number">
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Title'])">Title is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="Name" type="number">
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Name'])">Name is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Deadline</mat-label>
+    <input matInput formControlName="Deadline" type="number">
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Deadline'])">Deadline is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Deadline</mat-label>
+    <input matInput formControlName="Deadline" type="number">
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Deadline'])">Deadline is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Priority</mat-label>
+    <mat-select formControlName="Priority">
+      <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Priority'])">Priority is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="Status">
+      <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Status'])">Status is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Assignees</mat-label>
+    <mat-select formControlName="Assignees">
+      <mat-option *ngFor="let assignee of assignees" [value]="assignee">{{assignee}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="checkIsInvalid(taskForm.controls['Assignees'])">Assignees is required</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>-->
+<form [formGroup]="taskForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput formControlName="title" placeholder="Type title here...">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" placeholder="Type name here...">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Deadline</mat-label>
+    <input matInput formControlName="deadline" [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Priority</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let priority of taskPriorityOptions" [value]="priority">
+        {{ priority }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let status of taskStatusOptions" [value]="status">
+        {{ status }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Assignees</mat-label>
+    <mat-select multiple formControlName="assignees">
+      <mat-option *ngFor="let assignee of assignees" [value]="assignee">{{assignee}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="onSubmit()">Create Task</button>
+</form>

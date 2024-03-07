@@ -1,12 +1,12 @@
 import { TaskPriority } from "../enums";
 import { TaskStatus } from "../enums";
 
-export interface TaskModel {
-  id: string;
-  title: string;
-  name: string;
-  deadline: Date;
-  priority: TaskPriority;
-  status: TaskStatus;
-  assignees: string[];
+export class TaskModel {
+  public id!: number;
+  public title!: string;
+  public name!: string;
+  public deadline!: Date;
+  public priority!: TaskPriority;
+  public status!: TaskStatus;
+  public assignees!: string[];
 }
