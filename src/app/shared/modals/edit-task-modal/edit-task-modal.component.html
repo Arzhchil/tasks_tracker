@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Редактировать задачу</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editTaskForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of statuses" [value]="status.value">
+          {{status.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-label>Исполнители</mat-label>
+      <mat-chip-grid #chipList aria-label="Assignee Selector">
+        <mat-chip-row *ngFor="let assignee of assignees" [removable]="true" (removed)="remove(assignee)">
+          {{assignee}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+        <input placeholder="Новый исполнитель..." [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-grid>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onCancelClick()">Отмена</button>
+  <button mat-raised-button [mat-dialog-close]="editTaskForm.value" cdkFocusInitial>Сохранить</button>
+</div>

@@ -11,6 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TaskPriority, TaskStatus } from '../../../shared/enums';
 import { TaskModel } from '../../models';
 import { MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-createTask-modal',
   standalone: true,
@@ -27,6 +28,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: 'createTask.modal.html',
   styleUrls: ['createTask.modal.scss']
 })
+
 export class CreateTaskModal implements OnInit {
   taskStatusOptions = Object.values(TaskStatus);
   taskPriorityOptions = Object.values(TaskPriority);

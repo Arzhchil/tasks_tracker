@@ -76,7 +76,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Priority</mat-label>
-    <mat-select>
+    <mat-select formControlName="priority">
       <mat-option *ngFor="let priority of taskPriorityOptions" [value]="priority">
         {{ priority }}
       </mat-option>
@@ -85,7 +85,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Status</mat-label>
-    <mat-select>
+    <mat-select formControlName="status">
       <mat-option *ngFor="let status of taskStatusOptions" [value]="status">
         {{ status }}
       </mat-option>
