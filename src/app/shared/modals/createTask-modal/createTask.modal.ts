@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,10 @@ export class CreateTaskModal implements OnInit {
   assignees: string[] = ['Джо', 'Френки', 'Вито', 'Генри', 'Марио', 'Пьер', 'Луиджи'];
   public task: TaskModel = new TaskModel;
   public taskForm!: FormGroup;
-  constructor(public dialogRef: MatDialogRef<CreateTaskModal>) {
+  constructor(
+    public dialogRef: MatDialogRef<CreateTaskModal>,
+    private fb: FormBuilder
+  ) {
     this.taskForm = new FormGroup({
       title: new FormControl(''),
       name: new FormControl(''),
@@ -46,8 +49,23 @@ export class CreateTaskModal implements OnInit {
     });
   }
   onSubmit() {
-    this.dialogRef.close(this.taskForm.value);
+    let t = this;
+    if (t.taskForm.valid) {
+      t.dialogRef.close(t.taskForm.value);
+    }
   }
-  ngOnInit() {
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+  initializeForm(): void {
+    let t = this;
+    t.taskForm = t.fb.group({
+      title: ['', Validators.required], // Делаем поле обязательным
+      name: ['', Validators.required],  // Делаем поле обязательным
+      deadline: ['', Validators.required], // Делаем поле обязательным
+      priority: ['', Validators.required], // Делаем поле обязательным
+      status: ['', Validators.required], // Делаем поле обязательным
+      assignees: ['', Validators.required] // Делаем поле обязательным
+    });
   }
 }
