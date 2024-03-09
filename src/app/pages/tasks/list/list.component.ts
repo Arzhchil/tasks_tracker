@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -28,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
+    MatToolbarModule
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
@@ -38,6 +41,7 @@ export class ListComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private datePipe: DatePipe,
+    private router: Router
   ) { }
   tasks: TaskModel[] = [
     {
@@ -90,10 +94,10 @@ export class ListComponent implements OnInit, AfterViewInit {
   formatDate(date: Date): string | null {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
-  openTaskFormDialog(): void {
+  openCreateDialog(): void {
     let t = this;
     const dialogRef = t.dialog.open(CreateTaskModal, {
-      width: '600px',
+      width: '800px',
     });
     dialogRef.afterClosed().subscribe(result => {
       let t = this;
@@ -139,5 +143,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     if (tasks) {
       t.tasks = JSON.parse(tasks);
     }
+  }
+  showDetails(task: TaskModel): void {
+    this.router.navigate(['/detail'], { state: { task } });
   }
 }

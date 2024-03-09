@@ -1,5 +1,8 @@
 <div class="task-list">
-  <div>
+  <mat-toolbar color="primary">
+    <span>Список задач</span>
+  </mat-toolbar>
+  <div class="task__filter">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event)" placeholder="Фильтр">
     </mat-form-field>
@@ -36,10 +39,13 @@
         <button mat-button (click)="openEditDialog(task)">
           <mat-icon>edit</mat-icon>
         </button>
+        <button mat-button (click)="showDetails(task)">
+          <mat-icon>menu icon</mat-icon>
+        </button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-<button mat-raised-button (click)="openTaskFormDialog()">Создать новую задачу</button>
+<button mat-raised-button (click)="openCreateDialog()">Создать новую задачу</button>

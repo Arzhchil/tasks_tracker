@@ -1,6 +1,5 @@
 import { TaskPriority } from "../enums";
 import { TaskStatus } from "../enums";
-
 export class TaskModel {
   public id!: number;
   public title!: string;

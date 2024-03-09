@@ -1,1 +1,20 @@
-<p>detail works!</p>
+<div class="task-details-container mat-elevation-z8">
+  <mat-toolbar color="primary">
+    <span>Детали задачи</span>
+  </mat-toolbar>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Задача #{{task.id}}: {{task.title}}</mat-card-title>
+      <mat-card-subtitle>{{task.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Дедлайн: {{task.deadline | date: 'shortDate'}}</p>
+      <p>Приоритет: {{task.priority}}</p>
+      <p>Статус: {{task.status}}</p>
+      <p>Исполнители: {{task.assignees}}</p>
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="navigateBack()">Назад</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

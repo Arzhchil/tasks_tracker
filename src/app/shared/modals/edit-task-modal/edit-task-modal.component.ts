@@ -11,7 +11,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { NgForOf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-
 @Component({
   selector: 'app-edit-task-modal',
   standalone: true,
@@ -29,7 +28,6 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './edit-task-modal.component.html',
   styleUrl: './edit-task-modal.component.scss'
 })
-
 export class EditTaskModalComponent implements OnInit {
   editTaskForm!: FormGroup;
   statuses: any[] = [
