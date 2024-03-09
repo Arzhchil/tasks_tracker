@@ -60,12 +60,12 @@ export class CreateTaskModal implements OnInit {
   initializeForm(): void {
     let t = this;
     t.taskForm = t.fb.group({
-      title: ['', Validators.required], // Делаем поле обязательным
-      name: ['', Validators.required],  // Делаем поле обязательным
-      deadline: ['', Validators.required], // Делаем поле обязательным
-      priority: ['', Validators.required], // Делаем поле обязательным
-      status: ['', Validators.required], // Делаем поле обязательным
-      assignees: ['', Validators.required] // Делаем поле обязательным
+      title: ['', Validators.required],
+      name: ['', Validators.required],
+      deadline: ['', Validators.required],
+      priority: ['', Validators.required],
+      status: ['', Validators.required],
+      assignees: ['', Validators.required]
     });
   }
 }
