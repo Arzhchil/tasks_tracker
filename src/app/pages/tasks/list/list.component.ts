@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TaskModel } from '../../../shared/models';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TaskPriority, TaskStatus } from '../../../shared/enums';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
 import { CreateTaskModal } from '../../../shared/modals/createTask-modal/createTask.modal';
 import { EditTaskModalComponent } from '../../../shared/modals/edit-task-modal/edit-task-modal.component';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -23,22 +24,26 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     DatePipe,
     EditTaskModalComponent,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
-
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, AfterViewInit {
+  dataSource!: MatTableDataSource<TaskModel>;
+  @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private dialog: MatDialog,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) { }
   tasks: TaskModel[] = [
     {
       id: 1,
       title: 'Task 1',
-      name: 'Интерфейс для ООО <<Zavod>>',
+      name: 'Интерфейс для ООО "Zavod"',
       deadline: new Date("2024-03-07"),
       priority: TaskPriority.Low,
       status: TaskStatus.ToDo,
@@ -47,16 +52,40 @@ export class ListComponent implements OnInit {
     {
       id: 2,
       title: 'Task 2',
-      name: 'Рефакторинг кода',
-      deadline: new Date("2024-06-08"),
+      name: 'Система отчетности',
+      deadline: new Date("2023-05-15"),
       priority: TaskPriority.High,
-      status: TaskStatus.Done,
-      assignees: ['Майк Таргет']
+      status: TaskStatus.InProgress,
+      assignees: ['Сара Коннор', 'Джон Доу']
     }
   ];
   displayedColumns: string[] = ['id', 'title', 'name', 'deadline', 'priority', 'status', 'assignees'];
   ngOnInit(): void {
     this.loadTasksFromLocalStorage();
+  }
+  ngAfterViewInit() {
+    this.sorting()
+  }
+  sorting() {
+    let t = this;
+    t.dataSource = new MatTableDataSource(t.tasks);
+    t.dataSource.sort = t.sort;
+    t.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'deadline': return new Date(item.deadline).getTime();
+        case 'id': return item.id;
+        case 'title': return item.title;
+        case 'name': return item.name;
+        case 'priority': return item.priority;
+        case 'status': return item.status;
+        case 'assignees': return item.assignees.join(", ");
+        default: return "";
+      }
+    };
+  }
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   formatDate(date: Date): string | null {
     return this.datePipe.transform(date, 'yyyy-MM-dd');
@@ -66,7 +95,6 @@ export class ListComponent implements OnInit {
     const dialogRef = t.dialog.open(CreateTaskModal, {
       width: '600px',
     });
-
     dialogRef.afterClosed().subscribe(result => {
       let t = this;
       if (result) {
@@ -77,6 +105,7 @@ export class ListComponent implements OnInit {
         });
         t.saveTasksToLocalStorage()
         t.loadTasksFromLocalStorage();
+        t.sorting()
       }
     });
   }
@@ -95,6 +124,7 @@ export class ListComponent implements OnInit {
           console.log(t.tasks[taskIndex])
           t.saveTasksToLocalStorage()
           t.loadTasksFromLocalStorage();
+          t.sorting()
         }
       }
     });

@@ -32,7 +32,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class CreateTaskModal implements OnInit {
   taskStatusOptions = Object.values(TaskStatus);
   taskPriorityOptions = Object.values(TaskPriority);
-  assignees: string[] = ['Джо', 'Френки'];
+  assignees: string[] = ['Джо', 'Френки', 'Вито', 'Генри', 'Марио', 'Пьер', 'Луиджи'];
   public task: TaskModel = new TaskModel;
   public taskForm!: FormGroup;
   constructor(public dialogRef: MatDialogRef<CreateTaskModal>) {
